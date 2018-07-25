@@ -1,6 +1,6 @@
 import json
 import sys
-import NB
+from JupyterHelper import NB
 
 notebook_path_lst = sys.argv[1:]
 

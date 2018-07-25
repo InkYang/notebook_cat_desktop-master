@@ -1,4 +1,5 @@
 import json
+from . import reader
 
 class Notebook:
     '''
@@ -9,7 +10,7 @@ class Notebook:
         #self.path = path
         if path is not None:
     
-            self.cells, self.meta_data = self.__read_file(path)
+            self.cells, self.meta_data = reader.read_file(path)
 
     def __read_file(self, path):
 
@@ -19,7 +20,7 @@ class Notebook:
 
             s = nb_file.read()
 
-            return self.__read_json(s)
+            return reader.read_json(s)
 
     def __read_json(self, file):
         #read file, return cells and meta_data
