@@ -1,32 +1,28 @@
 import json
 import sys
+import NB
 
-if len(sys.argv) < 2:
-    raise Exception('参数数量必须大于1！')
-
-
-# accept argument lst
 notebook_path_lst = sys.argv[1:]
 
+notebook = []
+
 target_notebook = {}
-cells_lst = []
-# read notebook path list
+
+cells = []
+
 for path in notebook_path_lst:
-    with open(path) as notebook:
-        notebook_str = notebook.read()
-        notebook_json = json.loads(notebook_str)
+    
+    notebook.append(NB.Notebook(path))
 
-        cells = notebook_json['cells']
-        cells_lst += cells
 
-del notebook_json['cells']
+target_lst = notebook[0]
 
-target_notebook['cells'] = cells_lst
-target_notebook.update(notebook_json)
+for nb in notebook[1:]:
 
-# 转化成字符串
-target_notebook_str = json.dumps(target_notebook)
+    target_lst += nb
 
-# 存入文件
+
 with open('target_notebook.ipynb','w') as target:
-    target.write(target_notebook_str)
+
+    target.write(target_lst.jsons())
+
